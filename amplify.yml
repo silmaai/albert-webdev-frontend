@@ -3,10 +3,10 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yarn install --frozen-lockfile
+        - npm ci
     build:
       commands:
-        - yarn build
+        - npm run build
   artifacts:
     baseDirectory: dist
     files:
@@ -14,4 +14,3 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .yarn/cache/**/*
