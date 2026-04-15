@@ -8,10 +8,12 @@ frontend:
     build:
       commands:
         - npm run build
-        - mkdir -p .amplify-hosting/compute/default .amplify-hosting/static
+        - mkdir -p .amplify-hosting/compute/default/node_modules .amplify-hosting/static
         - cp -r dist/server/* .amplify-hosting/compute/default/
         - cp -r dist/client .amplify-hosting/compute/default/client
         - cp -r dist/client/* .amplify-hosting/static/
+        - cp -r node_modules/@astrojs/internal-helpers .amplify-hosting/compute/default/node_modules/@astrojs/internal-helpers || true
+        - cp -r node_modules/@oslojs .amplify-hosting/compute/default/node_modules/@oslojs || true
         - 'echo "{\"version\":1,\"routes\":[{\"path\":\"/_astro/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/certs/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/favicon.svg\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/*\",\"target\":{\"kind\":\"Compute\",\"src\":\"default\"},\"definition\":{}}],\"computeResources\":[{\"name\":\"default\",\"runtime\":\"nodejs20.x\",\"entrypoint\":\"entry.mjs\"}],\"framework\":{\"name\":\"astro\",\"version\":\"4.0.0\"}}" > .amplify-hosting/deploy-manifest.json'
   artifacts:
     baseDirectory: .amplify-hosting
