@@ -6,6 +6,7 @@
 
   interface Tab {
     label: string;
+    period?: string;
     sections: Section[];
     keywords?: string[];
   }
@@ -33,6 +34,9 @@
 <!-- Active tab content -->
 {#if tabs[activeTab]}
   <div class="space-y-8">
+    {#if tabs[activeTab].period}
+      <p class="text-navy-500 font-mono text-xs -mt-4 mb-2">{tabs[activeTab].period}</p>
+    {/if}
     {#each tabs[activeTab].sections as section}
       <div>
         <h4 class="text-blue-400 font-semibold font-mono text-sm uppercase tracking-widest mb-3">
