@@ -11,7 +11,7 @@ frontend:
         - mkdir -p .amplify-hosting/compute/default .amplify-hosting/static
         - cp -r dist/server/* .amplify-hosting/compute/default/
         - cp -r dist/client/* .amplify-hosting/static/
-        - 'echo "{\"version\":1,\"routes\":[{\"path\":\"/_astro/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/certs/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/favicon.svg\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/*\",\"target\":{\"kind\":\"Compute\",\"src\":\"default\"},\"definition\":{}}],\"computeResources\":[{\"name\":\"default\",\"runtime\":\"nodejs20.x\",\"entrypoint\":\"entry.mjs\"}],\"framework\":{\"name\":\"astro\",\"version\":\"4\"}}" > .amplify-hosting/deploy-manifest.json'
+        - 'echo "{\"version\":1,\"routes\":[{\"path\":\"/_astro/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/certs/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/favicon.svg\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/*\",\"target\":{\"kind\":\"Compute\",\"src\":\"default\"},\"definition\":{}}],\"computeResources\":[{\"name\":\"default\",\"runtime\":\"nodejs20.x\",\"entrypoint\":\"entry.mjs\"}],\"framework\":{\"name\":\"astro\",\"version\":\"4.0.0\"}}" > .amplify-hosting/deploy-manifest.json'
   artifacts:
     baseDirectory: .amplify-hosting
     files:
