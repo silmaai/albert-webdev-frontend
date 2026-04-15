@@ -5,15 +5,27 @@ frontend:
       commands:
         - rm -f package-lock.json
         - npm install
+        - npm install --save-dev esbuild
     build:
       commands:
         - npm run build
-        - mkdir -p .amplify-hosting/compute/default/node_modules .amplify-hosting/static
-        - cp -r dist/server/* .amplify-hosting/compute/default/
-        - cp -r dist/client .amplify-hosting/compute/default/client
+        - mkdir -p .amplify-hosting/compute/default .amplify-hosting/static
         - cp -r dist/client/* .amplify-hosting/static/
-        - cp -r node_modules/@astrojs/internal-helpers .amplify-hosting/compute/default/node_modules/@astrojs/internal-helpers || true
-        - cp -r node_modules/@oslojs .amplify-hosting/compute/default/node_modules/@oslojs || true
+        - cp -r dist/client .amplify-hosting/compute/default/client
+        - cp -r dist/server/chunks .amplify-hosting/compute/default/chunks
+        - cp dist/server/*.mjs .amplify-hosting/compute/default/
+        - >
+          npx esbuild dist/server/entry.mjs
+          --bundle
+          --platform=node
+          --format=esm
+          --outfile=.amplify-hosting/compute/default/entry.mjs
+          --allow-overwrite
+          --third-party:./client/*
+          --third-party:../client/*
+          --packages=bundle
+          --tree-shaking=true
+          --log-level=warning || echo "esbuild warning (non-fatal)"
         - 'echo "{\"version\":1,\"routes\":[{\"path\":\"/_astro/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/certs/*\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/favicon.svg\",\"target\":{\"kind\":\"Static\"},\"definition\":{}},{\"path\":\"/*\",\"target\":{\"kind\":\"Compute\",\"src\":\"default\"},\"definition\":{}}],\"computeResources\":[{\"name\":\"default\",\"runtime\":\"nodejs20.x\",\"entrypoint\":\"entry.mjs\"}],\"framework\":{\"name\":\"astro\",\"version\":\"4.0.0\"}}" > .amplify-hosting/deploy-manifest.json'
   artifacts:
     baseDirectory: .amplify-hosting
