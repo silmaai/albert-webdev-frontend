@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CareerCard from '../../components/CareerCard.astro';
+import { getActiveCareers } from '../../lib/api';
+import type { Career } from '../../types/api';
+
+let careers: Career[] = [];
+let fetchError = false;
+
+try {
+  careers = await getActiveCareers();
+} catch {
+  fetchError = true;
+}
+---
+
+<BaseLayout
+  title="Careers"
+  description="Open positions and collaboration opportunities with Hunter Albert."
+>
+
+  <!-- Header -->
+  <section class="bg-navy-950 border-b border-navy-800 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-extrabold text-white mb-3">Open Positions</h1>
+      <p class="text-navy-400 text-lg max-w-xl">
+        Collaboration opportunities and contract roles. If you're talented and motivated, let's build something together.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-14 bg-navy-950">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {fetchError && (
+        <div class="bg-red-900/30 border border-red-700 text-red-300 rounded-lg px-5 py-4 text-sm mb-10">
+          Could not load positions at this time. Please try again later.
+        </div>
+      )}
+
+      {!fetchError && careers.length === 0 && (
+        <div class="text-center py-24">
+          <svg class="w-16 h-16 text-navy-700 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          <h2 class="text-white text-xl font-bold mb-2">No open positions right now</h2>
+          <p class="text-navy-400 text-sm mb-6">
+            Nothing listed at the moment, but I'm always open to interesting conversations.
+          </p>
+          <a
+            href="/contact"
+            class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors"
+          >
+            Reach Out Anyway
+          </a>
+        </div>
+      )}
+
+      {careers.length > 0 && (
+        <div class="space-y-5">
+          {careers.map((career) => (
+            <CareerCard career={career} />
+          ))}
+        </div>
+      )}
+
+      <!-- General CTA -->
+      {careers.length > 0 && (
+        <div class="mt-14 bg-navy-900 border border-navy-700 rounded-2xl p-8 text-center">
+          <h3 class="text-white font-bold text-xl mb-2">Don't see the right fit?</h3>
+          <p class="text-navy-400 text-sm mb-6 max-w-md mx-auto">
+            Send me a message anyway. If you're a great engineer or designer, I'll always make time for a conversation.
+          </p>
+          <a
+            href="/contact"
+            class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition-colors"
+          >
+            Get in Touch
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    name: 'HyperWork',
+    company: 'AMS Enterprises',
+    period: 'Jan 2026 – Present',
+    url: null,
+    tags: ['Next.js', 'React 19', 'TypeScript', 'AWS Amplify', 'Cognito', 'AppSync', 'DynamoDB', 'Tailwind'],
+    bullets: [
+      'Architected a multi-tenant business platform serving multiple interconnected company websites with fully static export deployment on AWS Amplify.',
+      'Implemented four-tier RBAC combining AWS Cognito group-level auth with per-tenant membership roles — a single user can hold different access levels across different tenants.',
+      'Built serverless backend with AppSync (GraphQL), DynamoDB, and Lambda behind API Gateway for Stripe payments, SES email, Cognito user management, and build automation.',
+      'Built admin and superadmin dashboards for cross-tenant management: booking systems, service catalogs, staff scheduling, payment tracking, and real-time data analytics.',
+      'Established 150+ unit tests (Jest + React Testing Library) and 23 E2E test suites (Playwright) covering auth flows, CRUD, booking workflows, and payment processing.',
+    ],
+  },
+  {
+    name: 'Quote Builder & PDF Microservice',
+    company: 'Vendori',
+    period: 'May 2024 – Apr 2025',
+    url: 'https://vendori.com',
+    tags: ['React 18', 'TypeScript', 'NestJS', 'Node.js', 'AWS Lambda', 'Puppeteer', 'PostgreSQL', 'Redux'],
+    bullets: [
+      'Architected a modular React 18 / TypeScript frontend for a B2B quote management platform with drag-and-drop templating, rich text editing, and a real-time pricing rule engine.',
+      'Applied useMemo, useCallback, and useDeferredValue to reduce unnecessary re-renders by up to 35% in high-frequency real-time UI flows.',
+      'Built a high-performance serverless PDF generation microservice using AWS Lambda, Puppeteer, and TypeScript — pre-fetching 10+ API endpoints and delivering PDFs in under 15 seconds.',
+      'Developed NestJS/Node.js/PostgreSQL backend endpoints supporting the new frontend while maintaining compatibility with a legacy application.',
+    ],
+  },
+  {
+    name: 'Knights Hub',
+    company: 'AMS Enterprises',
+    period: '2025',
+    url: null,
+    tags: ['Next.js', 'TypeScript', 'Stripe', 'AWS Amplify', 'CMS'],
+    bullets: [
+      'Architected a Knights of Columbus community web platform with dynamic component systems and an admin panel for content editing and publishing.',
+      'Integrated Stripe for payments and built a highly dynamic website configuration editor covering SEO, navigation, content, and page/component structuring.',
+    ],
+  },
+  {
+    name: 'Resume Builder',
+    company: 'AMS Enterprises',
+    period: '2025',
+    url: null,
+    tags: ['Node.js', 'Puppeteer', 'AWS CDK', 'EC2', 'PM2', 'CloudFront'],
+    bullets: [
+      'Built a resume builder and editor with user profiles, customizable templates, and dynamic content generation for faster, higher-quality candidate profile turnaround.',
+      'Implemented Puppeteer-based server-side PDF rendering on EC2 managed by PM2, provisioned via AWS CDK stack defining VPC, EC2, Cognito, CloudFront, and CI/CD pipeline.',
+    ],
+  },
+  {
+    name: 'ETL Pipeline',
+    company: 'AMS Enterprises / Insight Technologies',
+    period: '2025',
+    url: null,
+    tags: ['Node.js', 'TypeScript', 'AWS Lambda', 'Aurora RDS', 'SigV4'],
+    bullets: [
+      'Engineered a production-grade ETL system with clean Extract/Transform/Load separation, processing CSV data and reducing client workflow execution time by 80%.',
+      'Implemented adaptive column mapping that detects and normalizes multiple CSV formats, enabling zero-touch ingestion of a variety of data sources.',
+      'Built data sanitization and storage microservices using Lambda integrated with Aurora RDS, using AWS SigV4 for secure Lambda invocation.',
+    ],
+  },
+];
+---
+
+<BaseLayout title="Projects" description="Selected projects by Hunter Albert — Senior Software Engineer.">
+
+  <!-- ─── Header ───────────────────────────── -->
+  <section class="bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 border-b border-navy-800 py-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white font-mono mb-3">Projects</h1>
+      <p class="text-navy-400 font-mono text-sm">Selected work from across my career.</p>
+    </div>
+  </section>
+
+  <!-- ─── Project Cards ────────────────────── -->
+  <section class="py-16 bg-navy-950">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      {projects.map((project) => (
+        <div class="bg-navy-900 border border-navy-800 rounded-2xl p-6 sm:p-8">
+
+          <!-- Header row -->
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-4">
+            <div>
+              <h2 class="text-white font-mono font-bold text-xl">
+                {project.url
+                  ? <a href={project.url} target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">{project.name} ↗</a>
+                  : project.name
+                }
+              </h2>
+              <p class="text-navy-400 font-mono text-xs mt-1">{project.company} &mdash; {project.period}</p>
+            </div>
+          </div>
+
+          <!-- Bullets -->
+          <ul class="space-y-2 mb-5">
+            {project.bullets.map((b) => (
+              <li class="flex gap-2 text-navy-300 font-mono text-sm leading-relaxed">
+                <span class="text-blue-500 mt-0.5 shrink-0">▸</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          <!-- Tags -->
+          <div class="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="bg-navy-800 border border-navy-700 text-navy-300 font-mono text-xs px-2 py-1 rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+
+        </div>
+      ))}
+
+      <!-- TODO: Add more projects as they're completed -->
+
+    </div>
+  </section>
+
+</BaseLayout>

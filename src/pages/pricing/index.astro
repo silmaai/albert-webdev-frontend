@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PricingToggle from '../../components/PricingToggle.svelte';
+import { getPricingProducts } from '../../lib/api';
+import type { PricingProduct } from '../../types/api';
+
+let products: PricingProduct[] = [];
+let fetchError = false;
+
+try {
+  products = await getPricingProducts();
+} catch {
+  fetchError = true;
+}
+
+const publicApiUrl = import.meta.env.PUBLIC_API_URL ?? 'http://localhost:1337';
+---
+
+<BaseLayout
+  title="Pricing"
+  description="Transparent pricing for consulting and development services."
+>
+
+  <!-- Header -->
+  <section class="bg-navy-950 border-b border-navy-800 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl font-extrabold text-white mb-3">Pricing</h1>
+      <p class="text-navy-400 text-lg max-w-xl mx-auto">
+        Straightforward plans with no surprises. Pick what fits your project, or reach out for a custom quote.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-navy-950">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {fetchError && (
+        <div class="bg-red-900/30 border border-red-700 text-red-300 rounded-lg px-5 py-4 text-sm mb-10 max-w-xl mx-auto text-center">
+          Could not load pricing plans. Please try again or <a href="/contact" class="underline hover:text-red-200">contact me directly</a>.
+        </div>
+      )}
+
+      {!fetchError && products.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-navy-400 text-lg mb-6">Pricing plans coming soon.</p>
+          <a href="/contact" class="text-blue-400 hover:text-blue-300 font-semibold text-sm transition-colors">
+            Request a quote →
+          </a>
+        </div>
+      )}
+
+      {products.length > 0 && (
+        <PricingToggle
+          client:load
+          products={products}
+          apiUrl={publicApiUrl}
+        />
+      )}
+
+      <!-- FAQ / trust strip -->
+      <div class="mt-20 border-t border-navy-800 pt-14">
+        <h2 class="text-white text-2xl font-bold text-center mb-10">Common Questions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {[
+            {
+              q: 'Can I cancel anytime?',
+              a: 'Yes. Monthly plans can be cancelled with 30 days notice. No long-term lock-in.',
+            },
+            {
+              q: 'Do you offer custom engagements?',
+              a: 'Absolutely. Most of my work is scoped project-by-project. Get in touch and we\'ll figure out the best structure.',
+            },
+            {
+              q: 'What payment methods do you accept?',
+              a: 'Credit/debit cards via Stripe, ACH bank transfer, and wire for larger engagements.',
+            },
+            {
+              q: 'Is there a free consultation?',
+              a: 'Yes — reach out via the contact form and we\'ll schedule a no-obligation 30-minute call.',
+            },
+          ].map(({ q, a }) => (
+            <div class="bg-navy-900 border border-navy-700 rounded-xl p-6">
+              <h3 class="text-white font-semibold mb-2">{q}</h3>
+              <p class="text-navy-400 text-sm leading-relaxed">{a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

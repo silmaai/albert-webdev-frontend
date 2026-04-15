@@ -1,0 +1,78 @@
+---
+import Nav from '../components/Nav.astro';
+import { getMenus } from '../lib/api';
+import type { Menu } from '../types/api';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Hunter Albert — Software Developer & Consultant based in Omaha, NE.' } = Astro.props;
+
+let menuItems: Menu[] = [];
+try {
+  menuItems = await getMenus();
+} catch {
+  // If API is unreachable during build/render, fall back to static nav
+  menuItems = [
+    { guid: 'fallback-1', label: 'Home',    link: '/',        icon: '', target: '',       oid: 1 },
+    { guid: 'fallback-2', label: 'Blog',    link: '/blog',    icon: '', target: '',       oid: 2 },
+    { guid: 'fallback-3', label: 'Careers', link: '/careers', icon: '', target: '',       oid: 3 },
+    { guid: 'fallback-4', label: 'Pricing', link: '/pricing', icon: '', target: '',       oid: 4 },
+    { guid: 'fallback-5', label: 'Contact', link: '/contact', icon: '', target: '',       oid: 5 },
+  ];
+}
+
+const fullTitle = `${title} | Hunter Albert`;
+---
+
+<!doctype html>
+<html lang="en" class="bg-navy-950 text-white">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+
+    <!-- Favicon placeholder -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts — Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+
+  <body class="min-h-screen flex flex-col font-sans antialiased">
+    <Nav items={menuItems} />
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="bg-navy-950 border-t border-navy-800 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-navy-400 text-sm">
+            &copy; {new Date().getFullYear()} Hunter Albert. All rights reserved.
+          </p>
+          <div class="flex items-center gap-6">
+            <a href="/blog"    class="text-navy-400 hover:text-white text-sm transition-colors">Blog</a>
+            <a href="/careers" class="text-navy-400 hover:text-white text-sm transition-colors">Careers</a>
+            <a href="/pricing" class="text-navy-400 hover:text-white text-sm transition-colors">Pricing</a>
+            <a href="/contact" class="text-navy-400 hover:text-white text-sm transition-colors">Contact</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

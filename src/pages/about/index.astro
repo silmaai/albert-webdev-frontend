@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExperienceTabs from '../../components/ExperienceTabs.svelte';
+
+const tabs = [
+  {
+    label: 'Experience',
+    sections: [
+      {
+        heading: 'AMS Enterprises — Senior Software Engineer (Jul 2025 – Present)',
+        body: 'Full-stack engineer and technical lead at AMS Enterprises, a consulting and staffing operation focused on SaaS products and consultancy. Architected HyperWork, a multi-tenant serverless CRM platform with four-tier RBAC combining AWS Cognito group-level auth with per-tenant membership roles. Built admin and superadmin dashboards with cross-tenant visibility, booking/scheduling interfaces, and real-time data analytics. Engineered an ETL pipeline (CSV → JSON) that reduced client workflow execution time by 80%. Built a resume builder with Puppeteer-based PDF rendering on EC2, managed by PM2 and provisioned via AWS CDK. Architected Knights Hub, a Knights of Columbus community platform with Stripe integration, dynamic CMS, and configurable navigation/SEO.',
+      },
+      {
+        heading: 'Vendori — Software Engineer (May 2024 – Apr 2025)',
+        body: "Responsible for systems design, architecture, development, and implementation across the front and back ends of Vendori's core applications. Architected a greenfield React 18 / TypeScript modular frontend for a B2B quote management platform with drag-and-drop templating, rich text editing, real-time pricing rule engine, multi-tenant approval workflows, and third-party customer deal rooms. Applied React 18 optimization patterns (useMemo, useCallback, useDeferredValue) to reduce unnecessary re-renders and boost performance by up to 35% in high-frequency real-time UI flows. Developed NestJS/Node.js/PostgreSQL backend endpoints in support of the new frontend. Built a high-performance serverless PDF generation microservice using AWS Lambda, Puppeteer, and TypeScript — pre-fetching and caching 10+ API endpoints and delivering enterprise-grade PDFs in under 15 seconds.",
+      },
+      {
+        heading: 'Mathison Projects — Software Engineer (Sep 2018 – Feb 2024)',
+        body: 'Led teams on internal projects and served clients across Healthcare, Commerce, and Finance. Delivered a full-stack Next.js blog platform using AWS Amplify, GraphQL/AppSync, and Lambda with DynamoDB and S3. Led development of an AWS IaC application provisioning a dozen DynamoDB tables with GSI optimization, CloudFront distributions, and automated CI/CD pipelines with deployment validation and rollback. Architected a full-stack drag-and-drop website builder using Next.js 14, React 18, AWS Amplify, Cognito, S3, and AWS SAM — supporting 15+ reusable drag-and-drop components, real-time page builder, and multi-domain deployment.',
+      },
+      {
+        heading: 'Insight Technologies — (Jun 2025 – Sep 2025)',
+        body: 'Architected an automated ETL system to transform CSV records into JSON using NodeJS. Created a data sanitization and validation microservice using AWS Lambda and NodeJS. Delivered a data storage microservice utilizing Lambda integrated with Aurora RDS to maintain separation of concerns across an ETL microservices fleet.',
+      },
+    ],
+    keywords: [],
+  },
+  {
+    label: 'Skills',
+    sections: [
+      {
+        heading: 'Frontend',
+        body: 'React 18/19, Next.js, TypeScript, JavaScript, Astro, Svelte, Vue.js, Radix UI, Material UI, Ant Design, Vuetify, TailwindCSS, SASS/SCSS, Redux, React Testing Library',
+      },
+      {
+        heading: 'Backend',
+        body: 'Node.js, NestJS, Express, Go (Gin/GORM), PostgreSQL, DynamoDB, MongoDB, SQLite, Aurora RDS, Serverless Framework, Prisma',
+      },
+      {
+        heading: 'AWS',
+        body: 'Amplify (Gen 1 & 2), Lambda, AppSync, Cognito, DynamoDB, S3, CloudFront, SQS, SNS, SES, EC2, ECS, API Gateway, CloudFormation, CDK, CodePipeline, CodeBuild, CodeDeploy, Parameter Store, Secrets Manager, IAM, KMS, Route53, ALB/ELB, VPC',
+      },
+      {
+        heading: 'DevOps & Tooling',
+        body: 'Git, CI/CD, Jenkins, Terraform, Docker, PM2, AWS CLI, IaC, Playwright (23 E2E suites), Jest (150+ unit tests), Puppeteer',
+      },
+    ],
+    keywords: [
+      'DVA-C02 AWS Certified Developer',
+      'Certified Senior React Developer (Certificates.dev)',
+    ],
+  },
+];
+---
+
+<BaseLayout title="About" description="Learn about Hunter Albert — developer, North Carolinian.">
+
+  <!-- ─── Page Header ───────────────────────── -->
+  <section class="bg-gradient-to-br from-navy-950 via-navy-900 to-navy-950 border-b border-navy-800 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-white font-mono mb-3">
+        <a
+          href="https://www.linkedin.com/in/hunter-koenig-albert-b55a81221/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-blue-400 transition-colors"
+        >
+          About Hunter
+        </a>
+      </h1>
+      <p class="text-navy-400 font-mono text-sm">Senior Software Engineer. 6+ years. New Bern, NC.</p>
+    </div>
+  </section>
+
+  <!-- ─── Personal Life ────────────────────── -->
+  <section class="py-16 bg-navy-950">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <h2 class="text-blue-400 font-mono font-semibold text-sm uppercase tracking-widest mb-8">
+        Personal Life
+      </h2>
+
+      <div class="space-y-5 text-navy-300 font-mono text-sm leading-relaxed">
+        <p>
+          Hi, my name is Hunter! I am a North Carolinian based in New Bern, NC, where I spend my time outside of work coding, painting, spending time with my wife and child, and pursuing my passion for fitness.
+        </p>
+        <p>
+          I am a results-driven Senior Software Engineer with over 6 years of experience in software development, with a focus on web technologies including React, Next.js, TypeScript, Node.js, NestJS, Go, and AWS. I hold the AWS DVA-C02 (Developer Associate) certification and am a Certified Senior React Developer (Certificates.dev).
+        </p>
+        <p>
+          I transitioned into web development in 2018 after a personal setback that prompted a career change. I approached it with the mindset that no matter what I would not fail — 6 months of self-teaching JavaScript later, a friend caught wind of my ambitions and offered me an internship at Mathison Projects, where I achieved mid-level developer in under 2 years.
+        </p>
+        <p>
+          When I asked my father to describe me in a word once, he called me 'intense.' My friends have often described me as passionate, dedicated, and loyal. My vision is to do my utmost to succeed, and in so doing bring success to others. In my livelihood this has manifested in being given crucial tasks in coding, architecting systems, leading teams, and mentoring interns.
+        </p>
+        <p>
+          If we make the decision to work together, you can stake the farm on me giving my all because I will stop at nothing to ensure you're as proud of the project as I will be. Now that you know a little bit about me, tell me about yourself.
+        </p>
+      </div>
+
+      <div class="mt-10">
+        <a
+          href="/contact"
+          class="inline-block bg-blue-600 hover:bg-blue-500 text-white font-semibold font-mono px-6 py-3 rounded-xl text-sm transition-colors shadow-lg shadow-blue-900/40"
+        >
+          Tell me about yourself →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Professional Experience ──────────── -->
+  <section class="py-16 bg-navy-900 border-t border-navy-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <h2 class="text-blue-400 font-mono font-semibold text-sm uppercase tracking-widest mb-8">
+        Professional Experience
+      </h2>
+
+      <!-- Svelte island: tab switcher -->
+      <ExperienceTabs client:load tabs={tabs} />
+
+    </div>
+  </section>
+
+</BaseLayout>

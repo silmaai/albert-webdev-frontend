@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getBlogs } from '../../lib/api';
+import type { Blog } from '../../types/api';
+
+let blogs: Blog[] = [];
+let fetchError = false;
+
+try {
+  blogs = await getBlogs(25);
+} catch {
+  fetchError = true;
+}
+
+// Collect unique categories for filter (rendered statically; JS filtering could be a Svelte island)
+const categories = [...new Set(blogs.map((b) => b.category).filter(Boolean))].sort();
+---
+
+<BaseLayout title="Blog" description="Thoughts on software, systems, architecture, and the craft of building products.">
+
+  <!-- Header -->
+  <section class="bg-navy-950 border-b border-navy-800 py-14">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl font-extrabold text-white mb-3">Blog</h1>
+      <p class="text-navy-400 text-lg max-w-xl">
+        Thoughts on software, architecture, leadership, and the craft of shipping products.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-14 bg-navy-950">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {fetchError && (
+        <div class="bg-red-900/30 border border-red-700 text-red-300 rounded-lg px-5 py-4 text-sm mb-10">
+          Could not load blog posts at this time. Please try again later.
+        </div>
+      )}
+
+      {!fetchError && blogs.length === 0 && (
+        <div class="text-center py-20">
+          <p class="text-navy-400 text-lg">No posts yet — check back soon!</p>
+        </div>
+      )}
+
+      {blogs.length > 0 && (
+        <>
+          <!-- Category chips (static display — no JS filtering needed for initial MVP) -->
+          {categories.length > 0 && (
+            <div class="flex flex-wrap gap-2 mb-10">
+              <span class="text-navy-400 text-xs font-semibold self-center mr-1 uppercase tracking-wider">Filter:</span>
+              {categories.map((cat) => (
+                <span class="bg-navy-800 border border-navy-700 text-navy-300 text-xs font-medium px-3 py-1.5 rounded-full cursor-default">
+                  {cat}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <!-- Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogs.map((blog) => (
+              <BlogCard blog={blog} />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+</BaseLayout>
